@@ -19,6 +19,20 @@ function App() {
     return (contact.name['first'] + ' ' +
       contact.name['last']).toLowerCase().includes(searchField.toLowerCase())
   });
+  const onAZ = () => {
+    let az = contacts.sort((a, b) => {
+      return (a.name['first'] + " " +
+        a.name['last']).localeCompare(b.name['first'] + " " + b.name['last'])
+    })
+    setContacts([...az]); //clone the list
+  }
+  const onZA = () => {
+    let za = contacts.sort((a, b) => {
+      return (b.name['first'] + " " +
+        b.name['last']).localeCompare(a.name['first'] + " " + a.name['last'])
+    })
+    setContacts([...za]); //clone the list
+  }
   return (
     <div className='tc'>
       <header>
@@ -26,7 +40,7 @@ function App() {
       </header>
       {contacts.length === 0 ? <h2 className='f2'>Loading...</h2> :
         <ErrorBoundary FallbackComponent={ErrorFallback}>
-          <Searcher searchChange={onSearchChange} />
+          <Searcher searchChange={onSearchChange} az={onAZ} za={onZA} />
           <Scroll>
             <CardList contacts={searchedContacts} />
           </Scroll>
